@@ -57,11 +57,11 @@ int main (int argc, char *argv[]) {
         <h2>Instructions</h2>
         <ul>
             <li>Review the source code to identify the buffer overflow vulnerability in the <code>vuln</code> function.</li>
-            <li>Compile the program on a Linux system. For example, you could use:
+            <li>Compile the program on a Linux system. For example, to override your operating system's stack protector, you could use:
                 <br><code>gcc -fno-stack-protector -z execstack -o challenge challenge.c</code>
             </li>
             <li>Create an exploit payload that overwrites the <code>secret</code> variable with the correct value <code>"CSE5272!"</code>.</li>
-            <li>Run your exploit and submit it as the flag to prove that you have won the challenge.</li>
+            <li>Run your exploit and submit it below to prove that you have won the challenge.</li>
         </ul>
     </section>
 
