@@ -74,10 +74,6 @@ a:hover {
 }
 
 /* Hints Section Styles */
-.hints-section {
-  margin-top: 40px;
-  text-align: center;
-}
 .hint-toggle-btn {
   padding: 10px 20px;
   font-size: 16px;
@@ -123,6 +119,13 @@ a:hover {
   color: white;
 }
 
+/* Permanent flag status message styling */
+#flagStatus {
+  margin-top: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 /* Documents Section Header */
 .documents-title {
   text-align: center;
@@ -133,7 +136,6 @@ a:hover {
 }
 
 /* Downloads Section / PDF Cards */
-
 /* Container for the PDF cards */
 .button-boxes {
   display: flex;
