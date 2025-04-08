@@ -21,6 +21,17 @@ header h1 {
   color: #ffffff;
 }
 
+/* Group Members Section styling */
+.group-members {
+  margin-top: 10px;
+}
+
+.group-members p {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
 .container {
   max-width: 800px;
   margin: 30px auto;
@@ -60,6 +71,25 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Hints Section Styles */
+.hints-section {
+  margin-top: 40px;
+  text-align: center;
+}
+.hint-toggle-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.hint-toggle-btn:hover {
+  background-color: black;
+  color: white;
 }
 
 /* Test Credentials Section Styles */

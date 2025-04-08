@@ -9,6 +9,9 @@
 <body>
 <header>
     <h1>CTF Challenge: Buffer Overflow</h1>
+    <div class="group-members">
+        <p>Group Members: Alice, Bob, Charlie</p>
+    </div>
 </header>
 <div class="container">
     <section>
@@ -62,23 +65,24 @@ int main (int argc, char *argv[]) {
         </ul>
     </section>
     <section>
-        <h2>Additional Information</h2>
-        <p>
-            The vulnerability arises due to incorrect handling of buffer sizes in the <code>read</code> system calls.
-            Think carefully about how the extra bytes in the read call may allow you to overflow <code>buf1</code> or <code>buf2</code>
-            and modify the adjacent <code>secret</code> buffer. Good luck!
-        </p>
+        <h2>Hints</h2>
+        <button onclick="toggleHint()" class="hint-toggle-btn">Reveal Hint</button>
+        <div id="hintText" style="display: none; margin-top: 10px;">
+            <p>
+                The vulnerability arises due to incorrect handling of buffer sizes in the <code>read</code> system calls.
+                Think carefully about how the extra bytes in the read call may allow you to overflow <code>buf1</code> or <code>buf2</code>
+                and modify the adjacent <code>secret</code> buffer.
+            </p>
+        </div>
     </section>
-
-    <!-- New Test Credentials Section -->
+    <!-- Test Credentials Section -->
     <section class="test-credentials">
-        <h2>Test Program Input</h2>
-        <p>To test your input, enter your username and password below:</p>
+        <h2>Test Credentials</h2>
+        <p>Enter your username and password below:</p>
         <input type="text" id="usernameInput" placeholder="Enter username">
         <input type="text" id="passwordInput" placeholder="Enter password">
         <button onclick="checkCredentials()">Submit</button>
     </section>
-
     <!-- Documents Section -->
     <section class="documents">
         <h2 class="documents-title">Documents</h2>
@@ -104,6 +108,15 @@ int main (int argc, char *argv[]) {
 </div>
 
 <script>
+    function toggleHint() {
+      var hint = document.getElementById("hintText");
+      if (hint.style.display === "none" || hint.style.display === "") {
+        hint.style.display = "block";
+      } else {
+        hint.style.display = "none";
+      }
+    }
+
     function checkCredentials() {
       var username = document.getElementById('usernameInput').value;
       var password = document.getElementById('passwordInput').value;
@@ -114,9 +127,7 @@ int main (int argc, char *argv[]) {
         return;
       }
 
-      // Password must have any 8 bytes followed immediately by "CSE5272!"
-      // Using a regex to validate: the password must have at least 16 characters and
-      // characters 9 to 16 (index 8 to 15) must be "CSE5272!"
+      // Password must have any 8 bytes, followed by "CSE5272!"
       var passPattern = /^.{8}CSE5272!.*/;
       if (!passPattern.test(password)) {
         alert("Failed to overflow the buffer correctly!");
