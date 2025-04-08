@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTF Challenge: Buffer Overflow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>CTF Challenge: Buffer Overflow</h1>
+</header>
+<div class="container">
+    <section>
+        <h2>Challenge Description</h2>
+        <p>
+            Welcome to the challenge! In this Capture The Flag (CTF) challenge, you are provided with the following C code.
+            Your objective is to analyze the code and exploit a vulnerability in the <code>vuln</code> function by leveraging
+            a buffer overflow to modify the variable <code>secret</code> so that it matches the required string.
+        </p>
+    </section>
+    <section>
+        <h2>Challenge Code</h2>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+void vuln() {
+    int password_size = 0xa;
+    char buf1[8];
+    char secret[8] = "12345678";
+    char buf2[8];
+    printf("User >>> ");
+    fflush(stdout);
+    read(0, buf1, password_size);
+    printf("Password >>> ");
+    fflush(stdout);
+    read(0, buf2, password_size);
+    if (strncmp(secret, "CSE5272!", 8) == 0) {
+        printf("\nYou have won!\n");
+    } else {
+        printf("\n<<< Incorrect password: %s\n", &secret);
+    }
+}
+
+int main (int argc, char *argv[]) {
+    vuln();
+}
+</code></pre>
+    </section>
+    <section>
+        <h2>Instructions</h2>
+        <ul>
+            <li>Review the source code to identify the buffer overflow vulnerability in the <code>vuln</code> function.</li>
+            <li>Compile the program on a Linux system. For example, you could use:
+                <br><code>gcc -fno-stack-protector -z execstack -o challenge challenge.c</code>
+            </li>
+            <li>Create an exploit payload that overwrites the <code>secret</code> variable with the correct value <code>"CSE5272!"</code>.</li>
+            <li>Run your exploit and submit it as the flag to prove that you have won the challenge.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Additional Information</h2>
+        <p>
+            The vulnerability arises due to incorrect handling of buffer sizes in the <code>read</code> system calls.
+            Think carefully about how the extra bytes in the read call may allow you to overflow <code>buf1</code> or <code>buf2</code>
+            and modify the adjacent <code>secret</code> buffer. Good luck!
+        </p>
+    </section>
+
+    <!-- New Test Credentials Section -->
+    <section class="test-credentials">
+        <h2>Test Program Input</h2>
+        <p>To test your input, enter your username and password below:</p>
+        <input type="text" id="usernameInput" placeholder="Enter username">
+        <input type="text" id="passwordInput" placeholder="Enter password">
+        <button onclick="checkCredentials()">Submit</button>
+    </section>
+
+    <!-- Documents Section -->
+    <section class="documents">
+        <h2 class="documents-title">Documents</h2>
+        <div class="button-boxes">
+            <div class="card">
+                <a href="pdfs/Slideshow.pdf" target="_blank">
+                    <div class="card-content">
+                        <embed src="pdfs/Slideshow.pdf" alt="PDF Thumbnail" class="card-image">
+                        <div class="plan-button">View Slideshow</div>
+                    </div>
+                </a>
+            </div>
+            <div class="card">
+                <a href="pdfs/Report.pdf" target="_blank">
+                    <div class="card-content">
+                        <embed src="pdfs/Report.pdf" alt="PDF Thumbnail" class="card-image">
+                        <div class="plan-button">View Report</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    function checkCredentials() {
+      var username = document.getElementById('usernameInput').value;
+      var password = document.getElementById('passwordInput').value;
+
+      // Check that username is exactly 9 bytes (characters)
+      if (username.length !== 9) {
+        alert("Failed to overflow the buffer correctly!");
+        return;
+      }
+
+      // Password must have any 8 bytes followed immediately by "CSE5272!"
+      // Using a regex to validate: the password must have at least 16 characters and
+      // characters 9 to 16 (index 8 to 15) must be "CSE5272!"
+      var passPattern = /^.{8}CSE5272!.*/;
+      if (!passPattern.test(password)) {
+        alert("Failed to overflow the buffer correctly!");
+        return;
+      }
+
+      alert("Congrats! You have captured the flag!");
+    }
+</script>
+</body>
+</html>
