@@ -133,7 +133,7 @@ int main (int argc, char *argv[]) {
         return;
       }
 
-      // Password must have any 8 bytes, followed by "CSE5272!"
+      // Password must have any 8 bytes followed by "CSE5272!"
       var passPattern = /^.{8}CSE5272!.*/;
       if (!passPattern.test(password)) {
         alert("Failed to overflow the buffer correctly!");
